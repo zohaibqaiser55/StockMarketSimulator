@@ -8,16 +8,26 @@ public class Investor extends Observer{
 	
 	MarketData data = MarketData.getInstance();
 	
-	public Investor(String id, int budget) {
+	public Investor(String id, int budget, Subject subject) {
 		this.id = id;
 		this.budget = budget;
 		sharesBought = 0;
+		
+		this.subject = subject;
+	    this.subject.attach(this);
+	      
 		System.out.println(toString());
+	}
+	
+	public void updateData() {
+		data.setTotalMoney(data.getTotalMoney() + budget);	
+		System.out.println("Investor update");
 	}
 	
 	@Override
 	public void update() {
-		data.setTotalMoney(data.getTotalMoney() + budget);		
+		data.setTotalMoney(data.getTotalMoney() + budget);	
+		System.out.println("Investor update");
 	}
 	
 	public String getId() {
