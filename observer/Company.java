@@ -1,11 +1,13 @@
 package observer;
 
+import java.util.Comparator;
 
 public class Company extends Observer {
 	
 	private String id;
 	private int numOfShares;
 	private double priceOfShare;
+
 	private int counter;
 	private double capital;
 	
@@ -28,13 +30,44 @@ public class Company extends Observer {
 	      
 		System.out.println(toString());
 	}
+	
+	public boolean sellShare() {
+		if(numOfShares > 0) {
+			counter++;
+			sharesSold++;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean increasePriceOfShare() {
+		if(counter >= 10) {
+			priceOfShare = priceOfShare*2;
+			counter = 0;
+//			System.out.println("price increased for a company");
+			return true;
+		}
+		return false;
+	}
+	
+	public static Comparator<Company> Capital = new Comparator<Company>() {
+
+		public int compare(Company s1, Company s2) {
+
+		   double capital1 = s1.capital;
+		   double capital2 = s2.capital;
+
+		   return (int) (capital2 - capital1);
+	   }};
 
 	@Override
 	public void update() {
+		//data.setTotalMoneySpent(data.getTotalMoneySpent() + priceOfShare);
 		if(sharesSold <= 0) {
 			priceOfShare = priceOfShare * 0.8;
-			updateCheapestShare();
+			System.out.println("Price down to " + priceOfShare);
 		}
+		updateCheapestShare();
 	}
 	
 	private void updateCheapestShare() {
@@ -51,5 +84,13 @@ public class Company extends Observer {
 
 	public String toString() {
 		return id + " " + numOfShares + " " + priceOfShare;
+	}
+	
+	public double getPriceOfShare() {
+		return priceOfShare;
+	}
+
+	public void setPriceOfShare(double priceOfShare) {
+		this.priceOfShare = priceOfShare;
 	}
 }

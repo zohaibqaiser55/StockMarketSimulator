@@ -6,7 +6,8 @@ public class MarketData {
 	
 	private double totalMoney;
 	
-	private int totalMoneyLeft;
+	private double totalMoneySpent;
+	private int totalSharesBought;
 	
 	private double cheapestStockPrice;
 
@@ -17,7 +18,7 @@ public class MarketData {
    //instantiated
    private MarketData(){
 	   setTotalShares(0);
-	   setTotalMoneyLeft(0);
+	   setTotalMoneySpent(0);
 	   setCheapestStockPrice(0);
    }
 
@@ -30,12 +31,12 @@ public class MarketData {
       System.out.println("Hello World!");
    }
 
-public int getTotalMoneyLeft() {
-	return totalMoneyLeft;
+public double getTotalMoneySpent() {
+	return totalMoneySpent;
 }
 
-public void setTotalMoneyLeft(int totalMoneyLeft) {
-	this.totalMoneyLeft = totalMoneyLeft;
+public void setTotalMoneySpent(double totalMoneySpent) {
+	this.totalMoneySpent = totalMoneySpent;
 }
 
 public int getTotalShares() {
@@ -60,5 +61,13 @@ public double getTotalMoney() {
 
 public void setTotalMoney(double totalMoney) {
 	this.totalMoney = totalMoney;
+}
+
+public int getTotalSharesBought() {
+	return totalSharesBought;
+}
+
+public void setTotalSharesBought(int totalSharesBought) {
+	this.totalSharesBought = totalSharesBought;
 }
 }

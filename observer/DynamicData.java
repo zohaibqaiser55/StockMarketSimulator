@@ -19,8 +19,8 @@ public class DynamicData {
 	public static ArrayList<Company> genCompanies(int numOfCompanies, Subject subject){
 		ArrayList<Company> companies = new ArrayList<Company>();
 		for(int i = 0; i<numOfCompanies; i++) {
-			int numOfShares = generate(1, 10);
-			int priceOfShare = generate(10, 100);
+			int numOfShares = generate(1, 100);
+			int priceOfShare = generate(10, 1000);
 			companies.add(genCompany(numOfShares, priceOfShare, subject));
 		}
 		
