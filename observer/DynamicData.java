@@ -2,6 +2,7 @@ package observer;
 import java.util.ArrayList;
 import java.util.UUID;
 
+// This class is used to generate data for this program
 public class DynamicData {
 	
 	private static Company genCompany(int numOfShares, int priceOfShare, Subject subject) {
@@ -37,6 +38,7 @@ public class DynamicData {
 		return investors;
 	}
 	
+	// A random number generator between a given range
 	public static int generate(int min, int max) {
         return min + (int)(Math.random() * ((max - min) + 1));
     }

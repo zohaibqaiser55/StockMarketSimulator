@@ -2,6 +2,7 @@ package observer;
 
 import java.util.Comparator;
 
+// This class uses Observer Pattern to synchronise stock prices
 public class Company extends Observer {
 	
 	private String id;
@@ -27,8 +28,6 @@ public class Company extends Observer {
 		
 		this.subject = subject;
 	    this.subject.attach(this);
-	      
-//		System.out.println(toString());
 	}
 	
 	public boolean sellShare() {
@@ -49,6 +48,7 @@ public class Company extends Observer {
 		return false;
 	}
 	
+	// This lamda function is used for sorting based on Capital
 	public static Comparator<Company> Capital = new Comparator<Company>() {
 
 		public int compare(Company s1, Company s2) {

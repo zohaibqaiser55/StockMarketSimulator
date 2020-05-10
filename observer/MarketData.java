@@ -1,5 +1,6 @@
 package observer;
 
+// Singleton Pattern is implemented in this class
 public class MarketData {
 	
 	private int totalShares;
@@ -14,8 +15,7 @@ public class MarketData {
    //create an object of MarketData
    private static MarketData instance = new MarketData();
 
-   //make the constructor private so that this class cannot be
-   //instantiated
+   //make the constructor private so that this class cannot be instantiated
    private MarketData(){
 	   setTotalShares(0);
 	   setTotalMoneySpent(0);

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
+// This class uses Chain of Responsibility Pattern to run the trading demo
 public class StockSimulator {
 	ArrayList<Company> companies;
 	ArrayList<Investor> investors;
@@ -44,6 +44,16 @@ public class StockSimulator {
 		System.out.println(" ");
 	}
 	
+	/**
+	 * This method demonstrates the chain of responsibility required for trading. The order is as follows
+	 * 0 - chooses random companies and investors
+	 * 1 - checks if a company can sell share
+	 * 2 - checks if an investor can buy share
+	 * 3 - buys and sells stock
+	 * 4 - update the data
+	 * 5 - checks for any rules
+	 * 6 - removes companies without shares and investors without money for efficiency
+	 */
 	public void runTradingDay() {
 		System.out.println("=========================================");
 		System.out.println("START OF TRADING DAY");
@@ -74,17 +84,6 @@ public class StockSimulator {
 		tempInvestors.addAll(investors);
 	}
 	
-	/**
-	 * This method demonstrates the chain of responsibility required for trading. The order is as follows
-	 * 1 - checks if a company can sell share
-	 * 2 - checks if an investor can buy share
-	 * 3 - buys and sells stock
-	 * 5 - update the data
-	 * 4 - checks for any rules
-	 * 
-	 * @param company
-	 * @param investor
-	 */
 	private void doTrade(Company company, Investor investor) {
 		if(investor.buyShare(company)){
 			sharesBought++;
@@ -113,13 +112,15 @@ public class StockSimulator {
 		System.out.println(" ");
 	}
 	
+	// Recursive method to print the top company with most capital
 	private void reportTopCompany(int index) {
 		if(tempCompanies.get(index).getCapital() == tempCompanies.get(index + 1).getCapital()) {
 			reportTopCompany(index + 1);
 		}
 		System.out.println("Max Capital " + tempCompanies.get(index).toString());
 	}
-	
+
+	// Recursive method to print the bottom company with least capital
 	private void reportBottomCompany(int index) {
 		if(tempCompanies.get(tempCompanies.size() - index).getCapital() == 
 				tempCompanies.get(tempCompanies.size() - (index + 1)).getCapital()) {
@@ -139,13 +140,15 @@ public class StockSimulator {
 		System.out.println(" ");
 	}
 	
+	// Recursive method to print the top investor with most shares bought
 	private void reportTopInvestor(int index) {
 		if(tempInvestors.get(index).getSharesBought() == tempInvestors.get(index + 1).getSharesBought()) {
 			reportTopInvestor(index + 1);
 		}
 		System.out.println("Max Shares " + tempInvestors.get(index).toString());
 	}
-	
+
+	// Recursive method to print the bottom investor with least shares bought
 	private void reportBottomInvestor(int index) {
 		if(tempInvestors.get(tempInvestors.size() - index).getSharesBought() == 
 				tempInvestors.get(tempInvestors.size() -(index + 1)).getSharesBought()) {
@@ -159,6 +162,7 @@ public class StockSimulator {
 		StockSimulator obj = new StockSimulator();;
 		do {	    	
 	        System.out.println("Welcome to the Stock Market Simulation");
+	        System.out.println("Press 0 to Run Full Demo");
 	        System.out.println("Press 1 to Run A Trading Day");
 	        System.out.println("Press 2 to Generate Company Report");
 	        System.out.println("Press 3 to Generate Investor Report");
@@ -170,6 +174,11 @@ public class StockSimulator {
 	        userChoice= Integer.parseInt(inp.readLine());
 	        
 	        switch(userChoice) {
+	        case 0:
+	        	obj.runTradingDay();
+	        	obj.reportCompany();
+	        	obj.reportInvestor();
+	        	break;
 	        case 1:
 	        	obj.runTradingDay();
 	        	break;

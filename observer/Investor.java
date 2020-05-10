@@ -14,8 +14,6 @@ public class Investor{
 		this.id = id;
 		this.budget = budget;
 		sharesBought = 0;
-	      
-//		System.out.println(toString());
 	}
 	
 	public boolean buyShare(Company company) {
@@ -27,6 +25,7 @@ public class Investor{
 		return false;		
 	}
 	
+	// This lamda function is used to sort investors based on number of shares bought
 	public static Comparator<Investor> Shares = new Comparator<Investor>() {
 
 		public int compare(Investor s1, Investor s2) {
