@@ -71,26 +71,26 @@ public class StockSimulator {
 		System.out.println("END OF TRADING DAY");
 	}
 	
-	public static void main(String args[]) {
-		StockSimulator obj = new StockSimulator();		
-		obj.runTradingDay();
-		
-		System.out.println("REPORT of Companies");
-		Collections.sort(obj.companies, Company.Capital);
-		for(Company comp : obj.companies) {
-			System.out.println("Max Capital " + comp);
-		}
-		
-		System.out.println("REPORT of Investor");
-		Collections.sort(obj.investors, Investor.Shares);
-		for(Investor comp : obj.investors) {
-			System.out.println("Max Shares " + comp);
-		}
-		
-		
-		
-//		System.out.println("" + obj);
-//		System.out.println("" + obj);
-//		System.out.println("" + obj);
-	}
+//	public static void main(String args[]) {
+//		StockSimulator obj = new StockSimulator();		
+//		obj.runTradingDay();
+//		
+//		System.out.println("REPORT of Companies");
+//		Collections.sort(obj.companies, Company.Capital);
+//		for(Company comp : obj.companies) {
+//			System.out.println("Max Capital " + comp);
+//		}
+//		
+//		System.out.println("REPORT of Investor");
+//		Collections.sort(obj.investors, Investor.Shares);
+//		for(Investor comp : obj.investors) {
+//			System.out.println("Max Shares " + comp);
+//		}
+//		
+//		
+//		
+////		System.out.println("" + obj);
+////		System.out.println("" + obj);
+////		System.out.println("" + obj);
+//	}
 }

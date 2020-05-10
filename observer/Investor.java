@@ -2,21 +2,18 @@ package observer;
 
 import java.util.Comparator;
 
-public class Investor extends Observer{
+public class Investor{
 	
 	private String id;
 	private double budget;
 	private int sharesBought;
-	
+
 	MarketData data = MarketData.getInstance();
 	
 	public Investor(String id, int budget, Subject subject) {
 		this.id = id;
 		this.budget = budget;
 		sharesBought = 0;
-		
-		this.subject = subject;
-	    this.subject.attach(this);
 	      
 		System.out.println(toString());
 	}
@@ -44,11 +41,6 @@ public class Investor extends Observer{
 		data.setTotalMoney(data.getTotalMoney() + budget);
 	}
 	
-	@Override
-	public void update() {
-		//data.setTotalSharesBought(data.getTotalSharesBought() + 1);	
-	}
-	
 	public String getId() {
 		return id;
 	}
@@ -60,6 +52,10 @@ public class Investor extends Observer{
 	}
 	public void setBudget(double budget) {
 		this.budget = budget;
+	}
+	
+	public int getSharesBought() {
+		return sharesBought;
 	}
 	
 	public String toString() {

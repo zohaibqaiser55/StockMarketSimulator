@@ -44,7 +44,6 @@ public class Company extends Observer {
 		if(counter >= 10) {
 			priceOfShare = priceOfShare*2;
 			counter = 0;
-//			System.out.println("price increased for a company");
 			return true;
 		}
 		return false;
@@ -62,14 +61,17 @@ public class Company extends Observer {
 
 	@Override
 	public void update() {
-		//data.setTotalMoneySpent(data.getTotalMoneySpent() + priceOfShare);
 		if(sharesSold <= 0) {
 			priceOfShare = priceOfShare * 0.8;
-			System.out.println("Price down to " + priceOfShare);
+			capital = numOfShares * priceOfShare;
 		}
 		updateCheapestShare();
 	}
 	
+	public double getCapital() {
+		return capital;
+	}
+
 	private void updateCheapestShare() {
 		if(data.getCheapestStockPrice() > priceOfShare || data.getCheapestStockPrice() == 0) {
 			data.setCheapestStockPrice(priceOfShare);
@@ -79,7 +81,6 @@ public class Company extends Observer {
 	public void updateData() {
 		updateCheapestShare();
 		data.setTotalShares(data.getTotalShares() + numOfShares);
-		System.out.println("Company update");
 	}
 
 	public String toString() {
@@ -93,4 +94,13 @@ public class Company extends Observer {
 	public void setPriceOfShare(double priceOfShare) {
 		this.priceOfShare = priceOfShare;
 	}
+	
+	public int getNumOfShares() {
+		return numOfShares;
+	}
+
+	public void setNumOfShares(int numOfShares) {
+		this.numOfShares = numOfShares;
+	}
+
 }
