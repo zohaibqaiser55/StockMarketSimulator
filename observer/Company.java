@@ -28,7 +28,7 @@ public class Company extends Observer {
 		this.subject = subject;
 	    this.subject.attach(this);
 	      
-		System.out.println(toString());
+//		System.out.println(toString());
 	}
 	
 	public boolean sellShare() {

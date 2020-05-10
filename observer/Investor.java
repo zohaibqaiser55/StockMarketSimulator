@@ -15,7 +15,7 @@ public class Investor{
 		this.budget = budget;
 		sharesBought = 0;
 	      
-		System.out.println(toString());
+//		System.out.println(toString());
 	}
 	
 	public boolean buyShare(Company company) {
