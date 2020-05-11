@@ -9,8 +9,6 @@ import java.util.Collections;
 public class StockSimulator {
 	ArrayList<Company> companies;
 	ArrayList<Investor> investors;
-	int sharesBought;
-	double moneySpent;
 	final int NUMBER = 100;
 	
 	ArrayList<Company> tempCompanies;
@@ -38,6 +36,7 @@ public class StockSimulator {
 		System.out.println("Initializing");
 		System.out.println("=========================================");
 		System.out.println("Total Shares " + data.getTotalShares());
+		System.out.println("Total Capital " + data.getTotalCapital());
 		System.out.println("Total Money " + data.getTotalMoney());
 		System.out.println("Cheapest Share " + data.getCheapestStockPrice());
 		System.out.println("=========================================");
@@ -63,19 +62,23 @@ public class StockSimulator {
 			
 			doTrade(company, investor);            
 			
-			if(company.sharesSold >= company.getNumOfShares()) {
+			if(company.getSharesSold() >= company.getNumOfShares()) {
 				companies.remove(company);
 				tempCompanies.add(company);
 			}
 			
-			if(investor.getBudget() <= 0) {
+			if(investor.getBudget() <= data.getCheapestStockPrice()) {
 				investors.remove(investor);
 				tempInvestors.add(investor);
 			}
 			
+			updateCheapestShare();
+			
+//			System.out.println("Shares left " + (data.getTotalShares() - data.getTotalSharesBought()) + 
+//					" Money left " + (data.getTotalMoney() - data.getTotalMoneySpent()) 
+//					+ " Size " + companies.size() + " " + investors.size());
 		} while(data.getTotalSharesBought() < data.getTotalShares() && 
-				data.getTotalMoneySpent() < data.getTotalMoney() &&
-				companies.size() > 0);
+				data.getTotalMoneySpent() < data.getTotalMoney() && !investors.isEmpty() && !companies.isEmpty());
 		System.out.println("END OF TRADING DAY");
 		System.out.println("=========================================");
 		System.out.println(" ");
@@ -86,8 +89,7 @@ public class StockSimulator {
 	
 	private void doTrade(Company company, Investor investor) {
 		if(investor.buyShare(company)){
-			sharesBought++;
-			moneySpent += company.getPriceOfShare();
+			company.setSharesSold(company.getSharesSold() + 1);
 			data.setTotalMoneySpent(data.getTotalMoneySpent() + company.getPriceOfShare());
 			data.setTotalSharesBought(data.getTotalSharesBought() + 1);
 			
@@ -99,6 +101,12 @@ public class StockSimulator {
 				subject.updateState();
 			}
 		}
+	}
+	
+	private void updateCheapestShare() {
+		Collections.sort(companies, Company.SharePrice);
+		data.setCheapestStockPrice(companies.get(0).getPriceOfShare());
+//		System.out.println(companies.get(0).getPriceOfShare() + " last " + companies.get(companies.size() - 1).getPriceOfShare());
 	}
 	
 	public void reportCompany() {
@@ -159,15 +167,14 @@ public class StockSimulator {
 	
 	public static void main(String args[]) throws IOException {
 		int userChoice = 1;
-		StockSimulator obj = new StockSimulator();;
+		StockSimulator obj = null;
 		do {	    	
 	        System.out.println("Welcome to the Stock Market Simulation");
 	        System.out.println("Press 0 to Run Full Demo");
 	        System.out.println("Press 1 to Run A Trading Day");
 	        System.out.println("Press 2 to Generate Company Report");
 	        System.out.println("Press 3 to Generate Investor Report");
-	        System.out.println("Press 4 to Generate New Data");
-	        System.out.println("Press 5 to Exit");
+	        System.out.println("Press 4 to Exit");
 	        
 	        System.out.print("Enter choice: ");
 	        BufferedReader inp = new BufferedReader (new InputStreamReader(System.in));
@@ -175,11 +182,13 @@ public class StockSimulator {
 	        
 	        switch(userChoice) {
 	        case 0:
+	        	obj = new StockSimulator();
 	        	obj.runTradingDay();
 	        	obj.reportCompany();
 	        	obj.reportInvestor();
 	        	break;
 	        case 1:
+	        	obj = new StockSimulator();
 	        	obj.runTradingDay();
 	        	break;
 	        case 2:
@@ -189,15 +198,12 @@ public class StockSimulator {
 	        	obj.reportInvestor();
 	        	break;
 	        case 4:
-	        	obj = new StockSimulator();
-	        	break;
-	        case 5:
 	        	System.out.println("Bye Bye");
 	        	break;
 	        default:
 	        	System.out.println("Invalid Input, try again");
 	        	break;
 	        }	        
-		} while(userChoice != 5);
+		} while(userChoice != 4);
 	}
 }

@@ -8,11 +8,9 @@ public class Company extends Observer {
 	private String id;
 	private int numOfShares;
 	private double priceOfShare;
-
-	private int counter;
 	private double capital;
 	
-	public int sharesSold;
+	private int sharesSold;
 
 	MarketData data = MarketData.getInstance();
 	
@@ -20,7 +18,6 @@ public class Company extends Observer {
 		this.id = id;
 		this.numOfShares = numOfShares;
 		this.priceOfShare = priceOfShare;
-		counter = 0;
 		
 		capital = numOfShares * priceOfShare;
 		
@@ -32,17 +29,14 @@ public class Company extends Observer {
 	
 	public boolean sellShare() {
 		if(numOfShares > 0) {
-			counter++;
-			sharesSold++;
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean increasePriceOfShare() {
-		if(counter >= 10) {
+		if(sharesSold % 10 == 0) {
 			priceOfShare = priceOfShare*2;
-			counter = 0;
 			return true;
 		}
 		return false;
@@ -58,29 +52,34 @@ public class Company extends Observer {
 
 		   return (int) (capital2 - capital1);
 	   }};
+	   
+	// This lamda function is used for sorting based on Capital
+	public static Comparator<Company> SharePrice = new Comparator<Company>() {
+
+		public int compare(Company s1, Company s2) {
+
+		   double capital1 = s1.priceOfShare;
+		   double capital2 = s2.priceOfShare;
+
+		   return (int) (capital1 - capital2);
+	   }};
+
 
 	@Override
 	public void update() {
 		if(sharesSold <= 0) {
-			priceOfShare = priceOfShare * 0.8;
+			priceOfShare = priceOfShare * 0.98;
 			capital = numOfShares * priceOfShare;
 		}
-		updateCheapestShare();
 	}
 	
 	public double getCapital() {
 		return capital;
 	}
-
-	private void updateCheapestShare() {
-		if(data.getCheapestStockPrice() > priceOfShare || data.getCheapestStockPrice() == 0) {
-			data.setCheapestStockPrice(priceOfShare);
-		}
-	}
 	
 	public void updateData() {
-		updateCheapestShare();
 		data.setTotalShares(data.getTotalShares() + numOfShares);
+		data.setTotalCapital(data.getTotalCapital() + (numOfShares * priceOfShare));
 	}
 
 	public String toString() {
@@ -103,4 +102,11 @@ public class Company extends Observer {
 		this.numOfShares = numOfShares;
 	}
 
+	public int getSharesSold() {
+		return sharesSold;
+	}
+
+	public void setSharesSold(int sharesSold) {
+		this.sharesSold = sharesSold;
+	}
 }

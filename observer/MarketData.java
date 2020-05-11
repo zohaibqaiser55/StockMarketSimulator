@@ -4,7 +4,16 @@ package observer;
 public class MarketData {
 	
 	private int totalShares;
+	private double totalCapital;
 	
+	public double getTotalCapital() {
+		return totalCapital;
+	}
+
+	public void setTotalCapital(double totalCapital) {
+		this.totalCapital = totalCapital;
+	}
+
 	private double totalMoney;
 	
 	private double totalMoneySpent;
